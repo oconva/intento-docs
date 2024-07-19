@@ -1,0 +1,27 @@
+# Deployment
+
+Thanks to [Firebase Genkit](https://firebase.google.com/docs/genkit), deploying your chat endpoints is as simple as running a single command.
+
+You can deploy your QvikChat project to any Node.js platform that can serve an [Express.js](https://expressjs.com) app, whether it is a cloud service or your own server.
+
+When you are ready to deploy the server to serve your defined chat endpoints, simply **build** the project and execute the **start** command.
+
+```bash copy
+npm run build
+npm run start
+```
+
+## QvikChat Sarter Template
+
+If you are using the [QvikChat Starter Template](https://github.com/oconva/qvikchat-starter-template), you can also run the commands for linting and code formatting before deploying the server.
+
+```bash copy
+npm run lint
+npm run format
+```
+
+If you've configured the tests correctly, you can also run the tests before deploying the server.
+
+```bash copy
+npm run test
+```

@@ -1,0 +1,70 @@
+import { SponsorBtn } from '../components/sponsor-btn';
+import { Button } from '../components/ui/button';
+import { Notice } from '../components/notice';
+import Img from '../components/img';
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+
+<h1 className="font-bold text-3xl mt-2 nx-text-primary-600">Intento</h1>
+
+<span className="font-bold">Intento</span> is a simple-to-use open source
+framework that lets you build and deploy intent recognition services powered by
+**large language models (LLM)**. It aim to make it easier, accessible, and
+faster for developers to empower their apps and projects with conversational AI.
+
+<Img
+	src="/images/intento_irs_demo.svg"
+	showSubtitle="true"
+	subtitle="Example of an intent recognition service built using Intento"
+	priority={true}
+	className="mt-5"
+/>
+
+## Why use Intento?
+
+Consider a scenario where you have a chat interface in your app or website, where users can give voice or text commands to get _something_ done. You need to understand what the user is asking for, and then take the appropriate action based on the user's **intent**. You may also need to extract some **information** from the user input to be able to perform the action. This is where **Intento** comes in.
+
+Intento helps you decipher what that _something_ is that the user wants done, and helps you extract the required information from the user input.
+
+## How it works?
+
+The core component of Intento is an **Intent Recognition Service (IRS) endpoint**. When you configure your project and run the server, the IRS endpoint that you setup, listens for incoming requests. When a new request is received, the IRS endpoint processes the request, extracts the intent and information from the user input, and sends back the extracted intent and information in the response.
+
+Here is the basic workflow:
+
+1. **Intento Project**: First step is to setup an Intento project. You can install the Intento package using npm or pnpm, or use the Intento starter template to get started.
+2. **Setup IRS Data Source**: Setup a data source that the IRS endpoint will be able to use to access data related to the intent recognition service (IRS).
+3. **Define IRS Endpoint**: Define an IRS endpoint with the configurations you want. You can define multiple IRS endpoints, each with its own configurations.
+4. **Run the Server**: Once you have setup the IRS data source and defined the IRS endpoint, you can run the server to start the IRS endpoint.
+
+<Button variant="default" className="my-5">
+	<Link href="/getting-started" className="no-style-link flex flex-row gap-1">
+		<span>Get Started</span> <ChevronRight strokeWidth="1.8px" />
+	</Link>
+</Button>
+
+<Notice>
+	Note: This is not an official Firebase Genkit or LangChain framework. This
+	is a community-driven project. Firebase Genkit is currently in beta, this
+	means that the public API and framework design may change in
+	backward-incompatible ways. We will do our best to keep this project
+	up-to-date.
+</Notice>
+
+If you find value from this project, please consider contributing or sponsoring the project to help maintain and improve it. All contributions and support are greatly appreciated!
+
+<SponsorBtn variant="outline" className="my-5"></SponsorBtn>
+
+## Features
+
+-   **Powered by LLMs**: Intento uses large language models (LLMs) to recognize intents and extract information from user input. No need to constantly train and update custom machine learning models or NLU systems.
+-   **Simple and Easy to Use**: Intento is designed to be simple and easy to use, with a minimal learning curve. You can get started with Intento and deploy your own intent recognition service in minutes and in few lines of code.
+-   **Deploy to any NodeJS platform**: Deploy your app or service to any NodeJS platform, including Firebase, Google Cloud, AWS, Heroku, etc., with ease.
+-   **Firebase Firestore**: In-built support for using [Cloud Firestore](https://firebase.google.com/docs/firestore) as the data source for storing information of your intent recognition service, including intents and API keys.
+-   **Focus on Performance, Reliability, and Security**: Every component in QvikChat is built to ensure low latency and scalable performance without compromising on security. From using prompts that help mitigate LLM hallucination and deter prompt injection attacks, to providing in-built support for enabling authentication for each endpoint, QvikChat is designed to help you build secure, performant, and reliable chat apps and services.
+
+## QvikChat
+
+Intento was build using [QvikChat](https://qvikchat.pkural.ca).
+
+**QvikChat** is a framework that provides you with a solid foundation to build powerful AI-powered chat service endpoints quickly and efficiently. It includes support for **multiple types of conversations (open-ended, close-ended)**, **chat history**, **response caching**, **authentication**, and **information retrieval using Retrieval Augmented Generation (RAG).**

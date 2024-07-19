@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--shiki-color-text: #414141;
+	--shiki-color-background: transparent;
+	--shiki-token-constant: #1976d2;
+	--shiki-token-string: #22863a;
+	--shiki-token-comment: #aaa;
+	--shiki-token-keyword: #d32f2f;
+	--shiki-token-parameter: #ff9800;
+	--shiki-token-function: #6f42c1;
+	--shiki-token-string-expression: #22863a;
+	--shiki-token-punctuation: #212121;
+	--shiki-token-link: #22863a;
+
+	--background: #fefdfc;
+	--foreground: #1a0800;
+
+	--card: #fefdfc;
+	--card-foreground: #1a0800;
+
+	--popover: #fefdfc;
+	--popover-foreground: #1a0800;
+
+	--primary: #509594;
+	--primary-hover: #3f7a76;
+	--primary-foreground: #fefdfc;
+
+	--secondary: #f5eeec;
+	--secondary-hover: #e2d9d4;
+	--secondary-foreground: #957568;
+
+	--accent: #957568;
+	--accent-foreground: #fefdfc;
+
+	--destructive: #d9534f;
+	--destructive-hover: #c9302c;
+	--destructive-foreground: #fefdfc;
+
+	--border: #efe5e1;
+	--input: #efe5e1;
+	--ring: #1a0800;
+
+	--radius: 0.5rem;
+}
+
+.dark {
+	--shiki-color-text: #d1d1d1;
+	--shiki-token-constant: #79b8ff;
+	--shiki-token-string: #ffab70;
+	--shiki-token-comment: #6b737c;
+	--shiki-token-keyword: #f97583;
+	--shiki-token-parameter: #ff9800;
+	--shiki-token-function: #b392f0;
+	--shiki-token-string-expression: #4bb74a;
+	--shiki-token-punctuation: #bbb;
+	--shiki-token-link: #ffab70;
+
+	--background: #fefdfc;
+	--foreground: #1a0800;
+
+	--card: #fefdfc;
+	--card-foreground: #1a0800;
+
+	--popover: #fefdfc;
+	--popover-foreground: #1a0800;
+
+	--primary: #957568;
+	--primary-hover: #7f5b4b;
+	--primary-foreground: #fefdfc;
+
+	--secondary: #f5eeec;
+	--secondary-hover: #e2d9d4;
+	--secondary-foreground: #957568;
+
+	--muted: #e2e5e4;
+	--muted-foreground: #6b7280;
+
+	--accent: #957568;
+	--accent-foreground: #fefdfc;
+
+	--destructive: #d9534f;
+	--destructive-hover: #c9302c;
+	--destructive-foreground: #fefdfc;
+
+	--border: #efe5e1;
+	--input: #efe5e1;
+	--ring: #1a0800;
+
+	--radius: 0.5rem;
+}
+
+#sponsor-btn:hover svg {
+	fill: #ffffff !important;
+}
+
+main
+	a:not(.no-style-link):not(.subheading-anchor):not(.nx-flex):not(
+		.nextra-breadcrumb a
+	) {
+	text-decoration: none !important;
+	position: relative;
+	z-index: 1;
+	font-weight: 600;
+	padding-right: 0.1em;
+	padding-left: 0.1em;
+	color: #0797b9;
+}
+
+main blockquote a {
+	font-weight: normal !important;
+}
+
+main
+	a:not(.no-style-link):not(.subheading-anchor):not(.nx-flex):not(
+		.nextra-breadcrumb a
+	):hover {
+	background-color: #0797b9;
+	color: #fff;
+	transition: all 0.2s ease-in-out;
+}
+
+.nextra-code-block pre {
+	background-color: hsl(212, 100%, 52.55%, 0.05);
+}
+
+.nextra-menu-desktop li.active > a {
+	color: hsl(
+		var(--nextra-primary-hue),
+		var(--nextra-primary-saturation),
+		50%
+	) !important;
+}
+
+.nextra-menu-desktop li a:hover {
+	color: hsl(
+		var(--nextra-primary-hue),
+		var(--nextra-primary-saturation),
+		50%
+	) !important;
+	background-color: hsl(
+		var(--nextra-primary-hue),
+		var(--nextra-primary-saturation),
+		90%,
+		0.3
+	);
+}
+
+.rt-Box {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	height: 480px;
+	z-index: -5;
+	background: linear-gradient(
+		to bottom,
+		hsl(
+			var(--nextra-primary-hue),
+			var(--nextra-primary-saturation),
+			77%,
+			0.3
+		),
+		transparent
+	);
+}
+
+.nextra-nav-container-blur {
+	background-color: transparent !important;
+}
+
+.nextra-scrollbar div.nx-mt-8 {
+	background-color: transparent !important;
+	box-shadow: none !important;
+}
+
+footer {
+	color: #4c4b4b !important;
+	background-color: var(--secondary) !important;
+	background: linear-gradient(
+		to top,
+		hsl(
+			var(--nextra-primary-hue),
+			var(--nextra-primary-saturation),
+			77%,
+			0.6
+		),
+		transparent
+	) !important;
+}
+
+:is(html[class~='dark']) {
+	.nextra-code-block pre {
+		background-color: hsl(212, 100%, 77%, 0.1);
+	}
+
+	.rt-Box {
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		top: 0px;
+		height: 480px;
+		z-index: -5;
+		background: linear-gradient(to bottom, #342d2a, transparent);
+	}
+
+	footer {
+		color: #c1b9bd !important;
+		background: linear-gradient(to top, #342d2a, transparent) !important;
+	}
+}

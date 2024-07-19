@@ -1,0 +1,30 @@
+{
+  "index": "Introduction",
+  "getting-started": "Getting Started",
+  "chat-endpoints": "Chat Endpoints",
+  "chat-agent": {
+    "display": "hidden"
+  },
+  "chat-history": "Chat History",
+  "prompts": "Prompts",
+  "rag-guide": "RAG Guide",
+  "caching": "Caching",
+  "authentication": "Authentication",
+  "integrations": "Integrations",
+  "deployment": "Deployment",
+  "Examples": {
+    "title": "Examples ↗",
+    "href": "https://github.com/oconva/qvikchat-examples",
+    "newWindow": true
+  },
+  "about": {
+    "title": "About",
+    "type": "page"
+  },
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://forms.gle/a3cEXytYX29PkoL59",
+    "newWindow": true
+  }
+}

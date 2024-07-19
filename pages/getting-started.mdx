@@ -1,0 +1,207 @@
+import Img from "../components/img";
+import Link from "next/link";
+
+# Getting Started
+
+**Intento** is an open source framework to help you build performant, reliable, and secure **intent recognition services** powered by LLMs (large language models).
+
+## How it works?
+
+The core component of Intento is an **Intent Recognition Service (IRS) endpoint**. When you configure your project and run the server, the IRS endpoint that you setup, listens for incoming requests. When a new request is received, the IRS endpoint processes the request, extracts the intent and information from the user input, and sends back the extracted intent and information in the response.
+
+Here is the basic workflow:
+
+1. **Intento Project**: First step is to setup an Intento project. You can install the Intento package using npm or pnpm, or use the Intento starter template to get started.
+2. **Setup IRS Data Source**: Setup a data source that the IRS endpoint will be able to use to access data related to the intent recognition service (IRS).
+3. **Define IRS Endpoint**: Define an IRS endpoint with the configurations you want. You can define multiple IRS endpoints, each with its own configurations.
+4. **Run the Server**: Once you have setup the IRS data source and defined the IRS endpoint, you can run the server to start the IRS endpoint.
+
+## Installing Intento Package
+
+You can install Intento using the following command:
+
+```bash copy
+npm install @oconva/intento
+```
+
+Or
+
+```bash copy
+pnpm add @oconva/intento
+```
+
+### Setup Environment Variables
+
+By default, Intento uses Google's Gemini API for text generation and embedding models. If you don't yet have a Google Gen AI API key, you can get one from [Gemini API - Get an API Key](https://ai.google.dev/gemini-api/docs/api-key).
+
+You can also use OpenAI API instead of Gemini API. You'll have to provide your OpenAI API key as the `OPENAI_API_KEY` environment variable and configure your IRS endpoints to use the LLM model you want it to use.
+
+Intento was developed using QvikChat which is built on top of Firebase Genkit, which allows you to easily add any Genkit plugins to your Intento project. You can easily use any LLM model available through any Genkit plugin by simply configuring that plugin when setting up Genkit.
+
+To learn more about configuring IRS endpoints to use a specific LLM model, check [here](/irs-endpoint).
+
+If using the default Gemini API models or OpenAI models, there should be a `.env` file at the root level of your project directory, and it should have a value for at least one of the following, depending on which API you want to use:
+
+```bash
+GOOGLE_GENAI_API_KEY=
+OPENAI_API_KEY=
+```
+
+Alternatively, you can copy the `.env.tmp` file or rename it to `.env` and fill in the values.
+
+### Usage
+
+The below code shows a simple example of defining an IRS endpoint using Intento. This example used Cloud Firestore as the data source for the IRS endpoint. To learn more about data sources, check [here](/data-sources).
+
+```typescript copy filename="index.ts"
+import { setIRSDataSource, defineIRSEndpoint, runIRSServer } from "@oconva/intento";
+import { FirestoreDataSource } from "@oconva/intento/firebase";
+
+const irsDataSource = new FirestoreDataSource({
+  credential: credential.cert("./service-account.json"), // or set GOOGLE_APPLICATION_CREDENTIALS env var
+  projectId: "your-project-id",
+  irsId: "your-irs-id",
+  collections: {
+    irsCollection: "ir-services",
+    intentsCollection: "intents",
+    apiKeysCollection: "api-keys",
+  }
+});
+
+defineIRSEndpoint({
+  endpoint: "irs",
+  dataSource: irsDataSource,
+});
+
+// Run server
+runIRSServer();
+```
+
+Running the above code will run a [Express](https://expressjs.com) server with your defined IRS endpoint accessible through it.
+
+You should be able to access the IRS endpoint defined above at the `irs` endpoint. 
+
+The below given command shows you an example of sending a query to an IRS endpoint from terminal using the `curl` command. You will need to modify the server URL, endpoint, API key, query and user ID to match your setup. Check the [testing endpoints](/testing-endpoints) section to learn more about how you can test your IRS endpoints.
+
+```bash copy
+curl -X POST "http://127.0.0.1:3400/chat" -H "Content-Type: application/json"  -d '{"data": { "query": "Answer in one sentence: What is Firebase Firestore?" } }'
+```
+
+Above example points to `http://127.0.0.1:3400`. You can change this port and host depending on where you are running the server and on which port.
+
+## Intento Starter Template
+
+To get up and running quickly, you can use the Intento starter template. The starter template is a pre-configured project with all the necessary configurations and setup to get you started with Intento write quality and reliable code. It comes pre-configured with support for TypeScript, ESLint, Prettier, Jest, SWC, and more, so you can get started with developing the next revolutionary chat app right away, without worrying about all these things.
+
+### Setup
+
+Simply, clone the [Intento starter template](https://github.com/oconva/intento-starter-template) to get started.
+
+```bash copy
+git clone https://github.com/oconva/intento-starter-template.git
+```
+
+### Environment Variables
+
+By default, Intento uses Google's Gemini API for text generation and embedding models. If you don't yet have a Google Gen AI API key, you can get one from [Gemini API - Get an API Key](https://ai.google.dev/gemini-api/docs/api-key).
+
+You can also use OpenAI API instead of Gemini API. You'll have to provide your OpenAI API key as the `OPENAI_API_KEY` environment variable and configure your IRS endpoints to use the LLM model you want it to use.
+
+Intento was developed using QvikChat which is built on top of Firebase Genkit, which allows you to easily add any Genkit plugins to your Intento project. You can easily use any LLM model available through any Genkit plugin by simply configuring that plugin when setting up Genkit.
+
+To learn more about configuring IRS endpoints to use a specific LLM model, check [here](/irs-endpoint).
+
+If using the default Gemini API models or OpenAI models, there should be a `.env` file at the root level of your project directory, and it should have a value for at least one of the following, depending on which API you want to use:
+
+```bash
+GOOGLE_GENAI_API_KEY=
+OPENAI_API_KEY=
+```
+
+Alternatively, you can copy the `.env.tmp` file or rename it to `.env` and fill in the values.
+
+### Install Dependencies
+
+You can run the following commands to install the dependencies:
+
+```bash
+npm install # or pnpm install
+```
+
+### Testing Predefined Endpoint
+
+Intento starter template comes pre-defined with an IRS endpoint based on test data related to an inventory management app. This endpoint is defined in the `src/index.ts` file.
+
+You can test the pre-defined endpoint to see how the IRS endpoints work and to confirm Intento setup. You can do this either using a graphical interface or by running the server locally and testing the endpoints using the terminal.
+
+#### Test from Terminal
+
+You can also run the server locally to test the endpoints from their REST endpoints.
+
+Before you can do this, you will need to first compile the TypeScript code.
+
+Compile the TypeScript code. You can modify `.swcrc` to change the SWC configurations and `package.json` to adjust the build command.
+
+```bash copy
+npm run build
+```
+
+Or
+
+```bash copy
+pnpm build
+```
+
+Then, start the server:
+
+```bash copy
+npm run start
+```
+
+Or
+
+```bash copy
+pnpm start
+```
+
+Depending on which endpoint you wish to test, and where and on which port your server starts, you should be able to access the IRS endpoints through the terminal using the `curl` command. The below given example sends the query to the `irs` endpoint:
+
+```bash copy
+curl -X POST "http://127.0.0.1:3400/chat" -H "Content-Type: application/json"  -d '{"data": { "query": "Answer in one sentence: What is Firebase Firestore?" } }'
+```
+
+#### Test Using Genkit Developer UI
+
+You can run the Genkit developer UI to test the endpoints. Testing the endpoints using a graphical interface is probably the easiest way to get started. You can know more about the Genkit Developer UI [here](https://firebase.google.com/docs/genkit/devtools#genkit_developer_ui).
+
+Start the Genkit developer UI:
+
+```bash copy
+npx genkit start
+```
+
+OR, you can install the Genkit CLI globally:
+
+```bash copy
+npm i -g genkit
+```
+
+Then start the Genkit developer UI:
+
+```bash copy
+genkit start
+```
+
+You should be able to see your defined IRS endpoints under the **Flows** section in the left sidebar. Simply click on the endpoint you want to test and enter the query you want to test with. Clicking the **Run** button will send the query to the endpoint and the response generation process will start.
+
+Check the [testing endpoints](/testing-endpoints) section to learn more about how you can test your IRS endpoints.
+
+To learn more about the Intento starter template, check the [Intento Starter Template](https://github.com/oconva/Intento-starter-template) repo.
+
+## How it works?
+
+Each chat service is defined by defining a chat endpoint. The chat endpoint that you define, is the code that gets called when a new request is received at that endpoint. You can define multiple chat services, each with its own endpoint. Each chat endpoint can have various attributes like input data schema, LLM model to be used for processing queries, authentication policy, etc., and you can define these properties and the code that gets executed within an endpoint when defining a chat endpoint.
+
+Intento provides you with an easy way to define these IRS endpoints _qvikly_ using the **`defineChatEndpoint`** function. This is the real superpower of Intento. You can define a chat endpoint with support for chat history, authentication and response caching in just a few lines of code.
+
+To learn more about different IRS endpoints that you can define, check the [IRS Endpoints](/chat-endpoints) section.

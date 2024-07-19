@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://qvikchat.pkural.ca/</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/about</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/getting-started</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/chat-endpoints</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/chat-endpoints/open-ended-chat</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/chat-endpoints/close-ended-chat</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/chat-endpoints/rag-chat</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/chat-endpoints/chat-endpoint-configurations</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/chat-endpoints/testing-endpoints</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/chat-history</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/prompts</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/rag-guide</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/rag-guide/data-ingestion</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/rag-guide/data-retrieval</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/rag-guide/data-loaders</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/rag-guide/embedding-models</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/rag-guide/vector-stores</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/caching</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/authentication</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/integrations</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/integrations/genkit</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/integrations/langchain</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/integrations/firebase</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://qvikchat.pkural.ca/deployment</loc>
+  <lastmod>2024-07-14T23:31:51+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>
