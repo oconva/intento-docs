@@ -1,0 +1,59 @@
+# Data Sources
+
+When creating a new IRS service, you will need to provide a **data source** from where the IRS data, intents data and the API keys data can be fetched. This data source can be a database or may come from locally stored JSON files.
+
+Its vital that you are aware of the structure in which the IRS data, intents data, and the API keys data should be stored. To learn more, check the [Data](/data) page.
+
+Intento provides built-in support for two types of data sources: Cloud Firestore and In-Memory.
+
+While the Cloud Firestore data source is recommended for production use, the In-Memory data source is useful for development and testing purposes.
+
+You can create your own custom data source by extending the `DataSource` interface provided by Intento.
+
+## Firestore
+
+Intento provides built-in support for using Cloud Firestore as the data source for IRS data, intents data, and API keys data. When using Cloud Firestore, you can simply specify the collection names where the IRS data, intents data, and API keys data are stored when configuring the data source.
+
+```typescript
+import { FirestoreDataSource } from "@oconva/intento/data-sources";
+
+const irsDataSource = new FirestoreDataSource({
+  credential: credential.cert("./service-account.json"), // or set GOOGLE_APPLICATION_CREDENTIALS env var
+  projectId: "your-project-id",
+  irsId: "your-irs-id",
+  collections: {
+    irsCollection: "ir-services",
+    intentsCollection: "intents",
+    apiKeysCollection: "api-keys",
+  },
+});
+```
+
+The `FirestoreDataSource` constructor takes an object with the following properties:
+
+- `credential`: The credential object to use to authenticate with Cloud Firestore. This can be the path to the service account key file. If not provided, Intento will try use the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to check for the path to the service account key file. If neither is provided, an error will be thrown.
+- `projectId`: The ID of the Google Cloud project where the Firestore database is located.
+- `irsId`: The ID of the IRS service for which the data source is being configured. This is used to filter the IRS data, intents data, and API keys data, thereby ensuring that only the data relevant to the IRS service is fetched. This also allows for the possibility of switching the underlying IRS data being used for a particular IRS service endpoint by simply changing the `irsId` value.
+- `collections`: An object containing the names of the collections where the IRS data, intents data, and API keys data are stored. The collections are specified as key-value pairs, where the key is the name of the collection and the value is the name of the collection in the Firestore database.
+
+## In-Memory
+
+The In-Memory data source is useful for development and testing purposes. You can provide the path to the JSON files where the IRS data, intents data, and API keys data are stored when configuring the In-Memory data source.
+
+```typescript
+import { InMemoryDataSource } from "@oconva/intento/data-sources";
+
+const irsDataSource = new InMemoryDataSource({
+  irsId: "your-irs-id",
+  files: {
+    irsDataFile: "./data/irs-data.json",
+    intentsDataFile: "./data/intents-data.json",
+    apiKeysDataFile: "./data/api-keys-data.json",
+  },
+});
+```
+
+The `InMemoryDataSource` constructor takes an object with the following properties:
+
+- `irsId`: The ID of the IRS service for which the data source is being configured. This is used to filter the IRS data, intents data, and API keys data, thereby ensuring that only the data relevant to the IRS service is fetched. This also allows for the possibility of switching the underlying IRS data being used for a particular IRS service endpoint by simply changing the `irsId` value.
+- `files`: An object containing the paths to the JSON files where the IRS data, intents data, and API keys data are stored. The files are specified as key-value pairs, where the key is the name of the data and the value is the path to the JSON file.

@@ -59,7 +59,7 @@ import {
   defineIRSEndpoint,
   runIRSServer,
 } from "@oconva/intento";
-import { FirestoreDataSource } from "@oconva/intento/firebase";
+import { FirestoreDataSource } from "@oconva/intento/data-sources";
 
 const irsDataSource = new FirestoreDataSource({
   credential: credential.cert("./service-account.json"), // or set GOOGLE_APPLICATION_CREDENTIALS env var
