@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-// QvikChat RAG demo image
+
 export const Img = ({
   src,
   blurUrl,

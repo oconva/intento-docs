@@ -1,10 +1,10 @@
 # Contributing Guidelines
 
-Thank you for your interest in contributing to QvikChat documentation! We welcome contributions from the community to help improve the QvikChat documentation and make it even better. Before you get started, please take a moment to review the following guidelines.
+Thank you for your interest in contributing to Intento documentation! We welcome contributions from the community to help improve the Intento documentation and make it even better. Before you get started, please take a moment to review the following guidelines.
 
 ## Getting Started
 
-To contribute to QvikChat documentation, please follow these steps:
+To contribute to Intento documentation, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your contribution.
@@ -15,7 +15,7 @@ To contribute to QvikChat documentation, please follow these steps:
 
 ## Code Style
 
-We follow a specific code style in QvikChat documentation to maintain consistency and readability. Please make sure to adhere to the following guidelines:
+We follow a specific code style in Intento documentation to maintain consistency and readability. Please make sure to adhere to the following guidelines:
 
 - Use meaningful variable and function names.
 - Indent code using spaces, not tabs. Use prettier to format your code if possible.
@@ -24,7 +24,7 @@ We follow a specific code style in QvikChat documentation to maintain consistenc
 
 ## Reporting Issues
 
-If you encounter any issues or bugs while using QvikChat documentation, please report them by following these steps:
+If you encounter any issues or bugs while using Intento documentation, please report them by following these steps:
 
 1. Check if the issue has already been reported by searching our issue tracker.
 2. If the issue hasn't been reported, create a new issue and provide a detailed description of the problem.
@@ -44,4 +44,4 @@ When submitting a pull request, please ensure the following:
 
 We expect all contributors to adhere to our code of conduct. Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
-Thank you for your contributions and helping us improve QvikChat documentation!
+Thank you for your contributions and helping us improve Intento documentation!

@@ -4,7 +4,7 @@ export const Footer = () => {
   return (
     <footer className="w-full p-10 flex flex-row justify-center items-center">
       <span>
-        QvikChat - A project by{" "}
+        Intento - A project by{" "}
         <a
           href="https://github.com/oconva"
           title="Oconva - GitHub"

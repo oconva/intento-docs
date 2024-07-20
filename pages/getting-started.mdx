@@ -38,7 +38,7 @@ You can also use OpenAI API instead of Gemini API. You'll have to provide your O
 
 Intento was developed using QvikChat which is built on top of Firebase Genkit, which allows you to easily add any Genkit plugins to your Intento project. You can easily use any LLM model available through any Genkit plugin by simply configuring that plugin when setting up Genkit.
 
-To learn more about configuring IRS endpoints to use a specific LLM model, check [here](/irs-endpoint).
+To learn more about configuring IRS endpoints to use a specific LLM model, check [here](/irs-endpoints).
 
 If using the default Gemini API models or OpenAI models, there should be a `.env` file at the root level of your project directory, and it should have a value for at least one of the following, depending on which API you want to use:
 
@@ -54,7 +54,11 @@ Alternatively, you can copy the `.env.tmp` file or rename it to `.env` and fill 
 The below code shows a simple example of defining an IRS endpoint using Intento. This example used Cloud Firestore as the data source for the IRS endpoint. To learn more about data sources, check [here](/data-sources).
 
 ```typescript copy filename="index.ts"
-import { setIRSDataSource, defineIRSEndpoint, runIRSServer } from "@oconva/intento";
+import {
+  setIRSDataSource,
+  defineIRSEndpoint,
+  runIRSServer,
+} from "@oconva/intento";
 import { FirestoreDataSource } from "@oconva/intento/firebase";
 
 const irsDataSource = new FirestoreDataSource({
@@ -65,7 +69,7 @@ const irsDataSource = new FirestoreDataSource({
     irsCollection: "ir-services",
     intentsCollection: "intents",
     apiKeysCollection: "api-keys",
-  }
+  },
 });
 
 defineIRSEndpoint({
@@ -79,7 +83,7 @@ runIRSServer();
 
 Running the above code will run a [Express](https://expressjs.com) server with your defined IRS endpoint accessible through it.
 
-You should be able to access the IRS endpoint defined above at the `irs` endpoint. 
+You should be able to access the IRS endpoint defined above at the `irs` endpoint.
 
 The below given command shows you an example of sending a query to an IRS endpoint from terminal using the `curl` command. You will need to modify the server URL, endpoint, API key, query and user ID to match your setup. Check the [testing endpoints](/testing-endpoints) section to learn more about how you can test your IRS endpoints.
 
@@ -109,7 +113,7 @@ You can also use OpenAI API instead of Gemini API. You'll have to provide your O
 
 Intento was developed using QvikChat which is built on top of Firebase Genkit, which allows you to easily add any Genkit plugins to your Intento project. You can easily use any LLM model available through any Genkit plugin by simply configuring that plugin when setting up Genkit.
 
-To learn more about configuring IRS endpoints to use a specific LLM model, check [here](/irs-endpoint).
+To learn more about configuring IRS endpoints to use a specific LLM model, check [here](/irs-endpoints).
 
 If using the default Gemini API models or OpenAI models, there should be a `.env` file at the root level of your project directory, and it should have a value for at least one of the following, depending on which API you want to use:
 
@@ -167,7 +171,7 @@ pnpm start
 Depending on which endpoint you wish to test, and where and on which port your server starts, you should be able to access the IRS endpoints through the terminal using the `curl` command. The below given example sends the query to the `irs` endpoint:
 
 ```bash copy
-curl -X POST "http://127.0.0.1:3400/chat" -H "Content-Type: application/json"  -d '{"data": { "query": "Answer in one sentence: What is Firebase Firestore?" } }'
+curl -X POST "http://127.0.0.1:3400/query" -H "Content-Type: application/json" -H "Authorization: a5zwhp0YlcRVkpnOXchIkL1lrmf0MPg24POM0kO6HcM=" -d '{"data": { "query": "add 4 litres milk?", "uid": "DI2UZuaTWjQPzVCRjzPW" } }'
 ```
 
 #### Test Using Genkit Developer UI
@@ -196,12 +200,10 @@ You should be able to see your defined IRS endpoints under the **Flows** section
 
 Check the [testing endpoints](/testing-endpoints) section to learn more about how you can test your IRS endpoints.
 
-To learn more about the Intento starter template, check the [Intento Starter Template](https://github.com/oconva/Intento-starter-template) repo.
+To learn more about the Intento starter template, check the [Intento Starter Template](https://github.com/oconva/intento-starter-template) repo.
 
 ## How it works?
 
-Each chat service is defined by defining a chat endpoint. The chat endpoint that you define, is the code that gets called when a new request is received at that endpoint. You can define multiple chat services, each with its own endpoint. Each chat endpoint can have various attributes like input data schema, LLM model to be used for processing queries, authentication policy, etc., and you can define these properties and the code that gets executed within an endpoint when defining a chat endpoint.
+Each IRS service is created by defining an **IRS endpoint**. The code that gets called when a new request is received at the endpoint depends on the way you configure your IRS endpoint. You can define multiple IRS services, each with its own endpoint.
 
-Intento provides you with an easy way to define these IRS endpoints _qvikly_ using the **`defineChatEndpoint`** function. This is the real superpower of Intento. You can define a chat endpoint with support for chat history, authentication and response caching in just a few lines of code.
-
-To learn more about different IRS endpoints that you can define, check the [IRS Endpoints](/chat-endpoints) section.
+Intento provides you with an easy way to define these IRS endpoints using the **`defineIRSEndpoint`** function. This is the real superpower of Intento. Check the [IRS Endpoints](/irs-endpoints) page to learn more.

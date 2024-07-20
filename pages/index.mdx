@@ -1,9 +1,9 @@
-import { SponsorBtn } from '../components/sponsor-btn';
-import { Button } from '../components/ui/button';
-import { Notice } from '../components/notice';
-import Img from '../components/img';
-import { ChevronRight } from 'lucide-react';
-import Link from 'next/link';
+import { SponsorBtn } from "../components/sponsor-btn";
+import { Button } from "../components/ui/button";
+import { Notice } from "../components/notice";
+import Img from "../components/img";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 <h1 className="font-bold text-3xl mt-2 nx-text-primary-600">Intento</h1>
 
@@ -13,11 +13,11 @@ framework that lets you build and deploy intent recognition services powered by
 faster for developers to empower their apps and projects with conversational AI.
 
 <Img
-	src="/images/intento_irs_demo.svg"
-	showSubtitle="true"
-	subtitle="Example of an intent recognition service built using Intento"
-	priority={true}
-	className="mt-5"
+  src="/images/intento_irs_demo.svg"
+  showSubtitle="true"
+  subtitle="Example of an intent recognition service built using Intento"
+  priority={true}
+  className="mt-5"
 />
 
 ## Why use Intento?
@@ -38,17 +38,16 @@ Here is the basic workflow:
 4. **Run the Server**: Once you have setup the IRS data source and defined the IRS endpoint, you can run the server to start the IRS endpoint.
 
 <Button variant="default" className="my-5">
-	<Link href="/getting-started" className="no-style-link flex flex-row gap-1">
-		<span>Get Started</span> <ChevronRight strokeWidth="1.8px" />
-	</Link>
+  <Link href="/getting-started" className="no-style-link flex flex-row gap-1">
+    <span>Get Started</span> <ChevronRight strokeWidth="1.8px" />
+  </Link>
 </Button>
 
 <Notice>
-	Note: This is not an official Firebase Genkit or LangChain framework. This
-	is a community-driven project. Firebase Genkit is currently in beta, this
-	means that the public API and framework design may change in
-	backward-incompatible ways. We will do our best to keep this project
-	up-to-date.
+  Note: This is not an official Firebase Genkit or LangChain framework. This is
+  a community-driven project. Firebase Genkit is currently in beta, this means
+  that the public API and framework design may change in backward-incompatible
+  ways. We will do our best to keep this project up-to-date.
 </Notice>
 
 If you find value from this project, please consider contributing or sponsoring the project to help maintain and improve it. All contributions and support are greatly appreciated!
@@ -57,11 +56,12 @@ If you find value from this project, please consider contributing or sponsoring 
 
 ## Features
 
--   **Powered by LLMs**: Intento uses large language models (LLMs) to recognize intents and extract information from user input. No need to constantly train and update custom machine learning models or NLU systems.
--   **Simple and Easy to Use**: Intento is designed to be simple and easy to use, with a minimal learning curve. You can get started with Intento and deploy your own intent recognition service in minutes and in few lines of code.
--   **Deploy to any NodeJS platform**: Deploy your app or service to any NodeJS platform, including Firebase, Google Cloud, AWS, Heroku, etc., with ease.
--   **Firebase Firestore**: In-built support for using [Cloud Firestore](https://firebase.google.com/docs/firestore) as the data source for storing information of your intent recognition service, including intents and API keys.
--   **Focus on Performance, Reliability, and Security**: Every component in QvikChat is built to ensure low latency and scalable performance without compromising on security. From using prompts that help mitigate LLM hallucination and deter prompt injection attacks, to providing in-built support for enabling authentication for each endpoint, QvikChat is designed to help you build secure, performant, and reliable chat apps and services.
+- **Powered by LLMs**: Intento uses large language models (LLMs) to recognize intents and extract information from user input. No need to constantly train and update custom machine learning models or NLU systems.
+- **Simple and Easy to Use**: Intento is designed to be simple and easy to use, with a minimal learning curve. You can get started with Intento and deploy your own intent recognition service in minutes and in few lines of code.
+- **Deploy to any NodeJS platform**: Deploy your app or service to any NodeJS platform, including Firebase, Google Cloud, AWS, Heroku, etc., with ease.
+- **Firebase Firestore**: In-built support for using [Cloud Firestore](https://firebase.google.com/docs/firestore) as the data source for storing information of your intent recognition service, including intents and API keys.
+- **Advanced Features**: Intento provides support advance features like query reformulation and response evaluation to improve the accuracy and performance of your intent recognition service.
+- **Focus on Performance, Reliability, and Security**: Every component in Intento is built to ensure low latency and scalable performance without compromising on security. From using prompts that help mitigate LLM hallucination and deter prompt injection attacks, to providing in-built support for authentication for each endpoint, Intento is designed to help you build secure, performant, and reliable intent recognition services.
 
 ## QvikChat
 
