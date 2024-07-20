@@ -1,0 +1,216 @@
+# Data
+
+The Intent Recognition Service (IRS) provides a way to recognize the intent and extract any vital information present in the user's input. It can be used in a variety of applications, including chatbots, virtual assistants, and other conversational interfaces.
+
+The most important part of an IRS is the **data** that it uses to recognize intents and extract information.
+
+When building an intent recognition service with Intento, you have to provide the data in a specific format. Below are the details of the data to provide and the format in which it should be provided.
+
+## IRS Data
+
+**IRS Data** is the data that describes the IRS service itself. It includes the following fields:
+
+- `id`: A unique identifier for the service.
+- `name`: The name of the service.
+- `description`: A short description of the service.
+- `project_description`: A detailed description of the project where the service is used. This will help the LLM understand the **context** in which the user input is given.
+- `version`: The version of the service. You can use this to keep track of changes to the service.
+- `last_update`: The date when the service was last updated.
+- `status`: The status of the service. You can use this to control the status of the service. For example, if you wish to disable the service for some reason (e.g., overuse), you can update the status to `inactive` in the database.
+- `usage_limit_tokens`: The maximum number of tokens that can be used by this service. You can set this to control the usage of the service.
+- `api_keys`: An array containing IDs of the records in the API Keys collection for the keys that belong to this service. When a user makes a request to the service, they will need to provide an API key to authenticate themselves. We will discuss the structure of an API key record in detail in the [API Keys Data](#api-keys-data) section.
+- `intents`: An array containing IDs of the records in the Intents collection for the intents that belong to this service. Structure of these intents is discussed in detail in the [Intents Data](#intents-data) section.
+- `llm_settings`: Use this to specify LLM settings for the service. The LLM settings include the primary model to use for intent recognition, the model to use for query reformulation, and the model to use for response evaluation. You can specify the model and other settings for each of these components.
+- `features`: Use this to specify the features that the service supports. You can specify whether the service supports query reformulation and response evaluation.
+
+Example of IRS Data:
+
+```json
+{
+  "id": "jV0DFAmdTGVA8mtTUdlC",
+  "name": "inventory-app-irs",
+  "description": "Inventory App intent recognition service",
+  "app_details": "Inventory App is a mobile application that helps users to manage their inventory. The app allows users to add, update, and delete items from their inventory.",
+  "version": "1.0.0",
+  "last_update": "2024-07-01",
+  "url": "https://irs.intento.ca/api/a5zwhp0YlcRVkpnOXch",
+  "status": "active",
+  "usage_limit_tokens": null,
+  "api_keys": ["a5zwhp0YlcRVkpnOXchIkL1lrmf0MPg24POM0kO6HcM="],
+  "llm_settings": {
+    "primary": {
+      "model": "gemini-15-flash",
+      "temperature": 0.9
+    },
+    "query_guardrails": {
+      "model": "gemini-15-flash"
+    },
+    "response_guardrails": {
+      "model": "gemini-15-flash"
+    }
+  },
+  "features": {
+    "query_expansion": true,
+    "pii_leakage_detection": true,
+    "response_evaluation": true
+  },
+  "intents": [
+    "JnRA9mjEC3mo0rHLacQg",
+    "N4uR0nOGMuDAu91u1TRS",
+    "NJinDakl1tTqnFjB5hrt"
+  ]
+}
+```
+
+## Intents Data
+
+**Intents Data** is the data that describes the intents that the IRS service can recognize. Each intent defines the following properties. Some of these properties are used for managing the intents, while others are provided to the LLM when executing an intent recognition task.
+
+Properties for managing intents (not used by the LLM):
+
+- `id`: A unique identifier for the intent.
+- `irs_id`: The ID of the IRS service to which this intent belongs. This is useful if you are storing all your intents in a single collection and need to extract intents for a specific service.
+- `uid`: User ID. You can use this to control read and write permissions for a specific user. This will prevent any unauthorized access to the data.
+- `status`: The status of the intent. You can use this to control the status of the intent. For example, if you wish to disable the intent for some reason (e.g., overuse), you can update the status to `inactive` in the database.
+- `last_update`: The date when the intent was last updated.
+
+Properties used by the LLM:
+
+- `intent_code`: A unique code for the intent. This is code that the LLM will return, which can be used by the client to identify the intent. For example, if user input is "add 2 bags of oats to inventory", the returned response will contain `{ intent_code: "add-item" }`, if the code for the intent for adding new item has the `intent_code` of `add-item`.
+- `name`: The name of the intent.
+- `description`: A short description of the intent.
+- `primary_identifying_keywords`: An array of keywords that are used to identify the intent. These keywords are used by the LLM to identify the intent in the user input.
+- `examples`: An array of example sentences that represent the intent. These examples are used by the LLM to learn the intent. Be sure to provide a variety of examples with different levels of information included in it, to help the LLM learn the intent well.
+- `data_attributes`: An intent may expect a certain set of values or information to be provided. For example, an intent meant for adding a new item, may expect an item name to be included in the user input. You can use the `data_attributes` property to specify an array of data attributes that the LLM should be able to identify and extract from user input, when that input has that given intent. Each data attribute defines the following properties:
+  - `id`: A unique identifier for the data attribute.
+  - `name`: The name of the data attribute.
+  - `description`: A short description of the data attribute.
+  - `type`: The type of the data attribute. Specify this as a single string with comma separated data types (`string`, `integer`, `float`, `boolean`, or `date`). This will help the LLM to understand the type of data that is expected for this attribute.
+  - `required`: A boolean value indicating whether the data attribute is required or not.
+
+Try to be as descriptive as you can when providing the data for the properties which are used by the LLM. This will help the LLM to understand the intent better and provide more accurate results.
+
+The below given example shows the data for two intents: `add-item` and `remove-item` for a hypothetical inventory management application.
+
+```json
+[
+  {
+    "id": "JnRA9mjEC3mo0rHLacQg",
+    "intent_code": "add-item",
+    "name": "Add Item",
+    "description": "Add an item to the inventory",
+    "status": "active",
+    "last_update": "2024-07-01",
+    "irs_id": "jV0DFAmdTGVA8mtTUdlC",
+    "uid": "DI2UZuaTWjQPzVCRjzPW",
+    "primary_identifying_keywords": ["add", "new"],
+    "examples": [
+      "Add 5 units of iPhone 15 to the inventory",
+      "Add 10 boxes of pens to the inventory"
+    ],
+    "data_attributes": [
+      {
+        "id": "item_name",
+        "name": "item name",
+        "description": "The name of the item to be added",
+        "type": "string",
+        "required": true
+      },
+      {
+        "id": "item_quantity",
+        "name": "item quantity",
+        "description": "The quantity of the item to be added",
+        "type": "integer, string",
+        "required": true
+      },
+      {
+        "id": "item_quantity_unit",
+        "name": "item quantity unit",
+        "description": "Measurement unit of the item quantity",
+        "type": "string",
+        "required": true
+      },
+      {
+        "id": "item_expiry_date",
+        "name": "item expiry date",
+        "description": "date of expiration for the item",
+        "type": "string",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "N4uR0nOGMuDAu91u1TRS",
+    "intent_code": "remove-item",
+    "name": "Remove Item",
+    "description": "Remove an item from the inventory",
+    "status": "active",
+    "last_update": "2024-07-01",
+    "irs_id": "jV0DFAmdTGVA8mtTUdlC",
+    "uid": "DI2UZuaTWjQPzVCRjzPW",
+    "primary_identifying_keywords": ["remove", "delete", "reduce"],
+    "examples": [
+      "Remove 2 units of iPhone 15 from the inventory",
+      "Remove 5 boxes of pens from the inventory"
+    ],
+    "data_attributes": [
+      {
+        "id": "item_name",
+        "name": "item name",
+        "description": "The name of the item to be removed",
+        "type": "string",
+        "required": true
+      },
+      {
+        "id": "item_quantity",
+        "name": "item quantity",
+        "description": "The quantity of the item to be removed",
+        "type": "integer, string",
+        "required": true
+      },
+      {
+        "id": "item_quantity_unit",
+        "name": "item quantity unit",
+        "description": "Measurement unit of the item quantity",
+        "type": "string",
+        "required": true
+      }
+    ]
+  }
+]
+```
+
+## API Keys Data
+
+API key based authentication is used to authenticate the users who make requests to the IRS service. The API key is a secret unique identifier that is used to authenticate the user and authorize the request. The API key is provided by the user when making a request to the service in the `Authorization` header of the request.
+
+This simple approach may not be the most secure way to authorize requests, but it is simple to use and implement, and has negligible overhead for both maintenance and request processing. This ensure that intent recognition requests can be performed with low-latency but still be secure.
+
+To learn more check [authentication](/authentication).
+
+You can store all your API keys in a single collection. Each API key record should have the following fields:
+
+- `id`: A unique identifier for the API key.
+- `key`: The API key itself. This is the secret key that the user will provide when making a request to the service.
+- `name`: Optional, a name for the API key. For example, if your application runs on multiple platforms, you can create separate API keys for each platform and give them a name that identifies the platform. This will help you to track the usage of the service by each platform.
+- `description`: Optional, a description for the API key.
+- `last_used`: The date when the API key was last used.
+- `status`: The status of the API key. You can use this to control the status of the API key. For example, if you wish to disable the API key for some reason (e.g., overuse), you can update the status to `inactive` in the database.
+- `irs_id`: The ID of the IRS service to which this API key belongs. This is useful if you are storing all your API keys in a single collection and need to extract API keys for a specific service.
+- `uid`: User ID. You can use this to control read and write permissions for a specific user. This will prevent any unauthorized access to the data.
+- `usage_limit_tokens`: The maximum number of tokens that can be used by this API key. You can set this to control the usage of the API key.
+
+Example of API Key Data record:
+
+```json
+{
+  "key": "a5zwhp0YlcRVkpnOXchIkL1lrmf0MPg24POM0kO6HcM=",
+  "name": "intento-android-app",
+  "description": "API key for the Intento Android app",
+  "last_used": "2024-07-01",
+  "status": "active",
+  "irs_id": "jV0DFAmdTGVA8mtTUdlC",
+  "uid": "DI2UZuaTWjQPzVCRjzPW",
+  "usage_limit_tokens": null
+}
+```
