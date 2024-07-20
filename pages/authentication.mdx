@@ -1,202 +1,61 @@
 # Authentication
 
-Out of the box, QvikChat provides a simple, yet efficient, API key based authentication system. This system is designed to be easy to use and secure. It is based on the concept of API keys, which are unique secret keys that are used to authenticate requests to the API.
+API key based authentication is used to authenticate the users who make requests to the IRS service. The API key is a secret unique identifier that is used to authenticate the user and authorize the request. The API key is provided by the user when making a request to the service in the `Authorization` header of the request.
+
+This simple approach may not be the most secure way to authorize requests, but it is simple to use and implement, and has negligible overhead for both maintenance and request processing. This ensure that intent recognition requests can be performed with low-latency but still be secure.
 
 ## Core Concepts
 
-- **Enable Authentication**: To enable authentication, you need to set the `enableAuth` option to `true` when configuring the chat endpoint.
-- **API Key Record**: Each API key record has several properties, including the secret key, the user ID who owns the key, key's status (active or inactive), and list of endpoints it provides access to (helps to control access at granular level).
-- **API Key Store**: The API key store is a collection of API key records. It is used to manage API keys, including creating, updating, deleting, and querying keys.
+You can store all your API keys in a single collection. Each API key record in this collection should follow specific structure. To learn more about the structure of an API key record, check [API Keys Data](/data#api-keys-data).
 
-Anytime a request is received at an endpoint that requires authentication, the API key is validated against the API key store. If the key is valid, the request is processed; otherwise, an error is returned.
+An API key record can have several properties, including the secret key, the user ID who owns the key, key's status (active or inactive), and list of endpoints it provides access to (helps to control access at granular level).
 
-## Enable Authentication
+Anytime a request is received at an endpoint that requires authentication, the API key present in the authorization headers of the request is validated against the API key store. For the key to be valid, it must meet the following conditions:
 
-To enable authentication, set the `enableAuth` option to `true` when configuring the chat endpoint, and provide an API key store instance.
+- The key must be present in the API key store or collection.
+- The user id (`uid`) provided with the request must match the `uid` specified in the key record, i.e., the key must be associated with the user making the request.
+- The `status` of the key must be `active`.
+- The key must have access to the endpoint being accessed.
+- Usage limit specified for the given key must not have been exceeded.
 
-### Firestore API Key Store
-
-For example, the following code snippet demonstrates how to enable authentication using a Firestore API key store. To do this, you need to provide the Firestore API key store as the `apiKeyStore` to the endpoint configurations.
-
-When creating an instance of the `FirestoreAPIKeyStore` class, you need to provide the following options:
-
-- `firebaseApp`: The Firebase app instance.
-- `collectionName`: The name of the collection that will store the API keys.
-
-The collection storing the API keys should contain records that follow the structure of the `APIKeyRecord` interface. For more information, check [API Key Store Interface](#api-key-store-interface).
-
-```typescript copy
-import { getFirebaseApp } from "@oconva/qvikchat/firebase";
-import { FirestoreAPIKeyStore } from "@oconva/qvikchat/auth";
-import { defineChatEndpoint } from "@oconva/qvikchat/endpoints";
-
-// Initialize Firebase App
-const firebaseApp = getFirebaseApp();
-
-// Firestore API Key store
-const firestoreCacheStore = new FirestoreAPIKeyStore({
-  firebaseApp,
-  collectionName: "api-keys", // collection where API keys are stored
-});
-
-// Chat Endpoint with Firestore API Key store
-defineChatEndpoint({
-  endpoint: "chat",
-  enableAuth: true,
-  apiKeyStore: firestoreCacheStore,
-});
-```
-
-Remember to initialize the Firebase app before using `FirestoreAPIKeyStore`. To learn more about initializing the Firebase app, check [Initialize Firebase App](/integrations/firebase#initialize-firebase-app)
-
-### In-Memory API Key Store
-
-You can also use an in-memory API key store to manage API keys. This is useful for testing and development purposes. The following code snippet demonstrates how to create an in-memory API key store:
-
-```typescript copy
-import { InMemoryAPIKeyStore } from "@oconva/qvikchat/auth";
-import { defineChatEndpoint } from "@oconva/qvikchat/endpoints";
-
-// Create an in-memory API Key store
-const inMemoryAPIKeyStore = new InMemoryAPIKeyStore();
-
-// Add an API Key to the store
-// Use this API Key and user-id for testing
-inMemoryAPIKeyStore.addKey(
-  "13BtC3sW8LJsi0emWjymnOrWpZI7CmfJ9aT6KliFgjk=", // test API Key
-  {
-    uid: "test-user", // test user id
-    status: "active",
-    endpoints: "all", // allow access to all endpoints
-  }
-);
-
-// Chat Endpoint with in-memory API Key store
-defineChatEndpoint({
-  endpoint: "chat",
-  enableAuth: true,
-  apiKeyStore: inMemoryAPIKeyStore,
-});
-```
+If the key is valid, the request is processed; otherwise, an error is returned.
 
 ## API Key Store
 
-The API key store is a collection of API key records. It is used to manage API keys, including creating, updating, deleting, and querying keys.
+The API key store is a collection of API keys that are used to authenticate users who make requests to the IRS service. The API key store can be stored in a database or a file, depending on the data source you are using. For production use, it is recommended to use a database like Cloud Firestore to store the API keys.
 
-You can implement your own API Key Store by implementing the `APIKeyStore` interface. The following code snippet demonstrates how to create a custom API key store:
+### Firestore
 
-```typescript copy
-import { APIKeyStore } from "@oconva/qvikchat/auth";
+Intento provides built-in support for using Cloud Firestore as the data source for IRS data and API keys. When using Cloud Firestore, you can simple specify the collection name where the API keys are stored when configuring the data source.
 
-export class CustomAPIKeyStore implements APIKeyStore {
-  // Implement the APIKeyStore interface
-}
+```typescript {8}
+const irsDataSource = new FirestoreDataSource({
+  credential: credential.cert("./service-account.json"), // or set GOOGLE_APPLICATION_CREDENTIALS env var
+  projectId: "your-project-id",
+  irsId: "your-irs-id",
+  collections: {
+    irsCollection: "ir-services",
+    intentsCollection: "intents",
+    apiKeysCollection: "api-keys",
+  },
+});
 ```
 
-### API Key Store Interface
+Learn more about Firestore data source [here](/data-sources#firestore).
 
-Below given code gives you an idea of the `APIKeyRecord` and `APIKeyStore` interfaces. Actual implementation may vary depending on the version of QvikChat you are using.
+### In-Memory
 
-**API Key Record Type**
+For development and testing purposes, you can use an in-memory data source to store the API keys. The in-memory data source stores the API keys in memory and does not persist the data across server restarts.
 
-```typescript copy
-/**
- * Represents a record of an API key.
- */
-export type APIKeyRecord = {
-  /**
-   * The number of requests made using the API key.
-   */
-  requests: number;
-  /**
-   * The maximum number of requests allowed for the API key.
-   */
-  requestsLimit?: number;
-  /**
-   * The date when the API key was last used.
-   */
-  lastUsed: Date;
-  /**
-   * The status of the API key.
-   */
-  status: APIKeyStatus;
-  /**
-   * The endpoints accessible by the API key.
-   */
-  endpoints: APIKeyEndpoints;
-  /**
-   * The unique identifier of the API key.
-   */
-  uid: string;
-};
+```typescript {6}
+const irsDataSource = new InMemoryDataSource({
+  irsId: "",
+  files: {
+    irsDataFile: "./data/irs-data.json",
+    intentsDataFile: "./data/intents-data.json",
+    apiKeysDataFile: "./data/api-keys-data.json",
+  },
+});
 ```
 
-**API Key Store Interface**
-
-```typescript copy
-/**
- * Represents an API key store.
- */
-export interface APIKeyStore {
-  /**
-   * Map containing all API keys.
-   */
-  keys: APIKeyCollection;
-
-  /**
-   * Verifies if the given API key exists and its status is active.
-   * @param key - The API key to verify.
-   * @returns A promise that resolves to a boolean indicating whether the API key is valid.
-   */
-  verifyAPIKey: (key: APIKey) => Promise<boolean>;
-
-  /**
-   * Adds a new API key record.
-   * @param key - The API key to add.
-   * @param config - The configuration for the new API key record.
-   * @returns A promise that resolves to a boolean indicating whether the API key was successfully added.
-   */
-  addKey: (key: APIKey, config: NewAPIKeyRecord) => Promise<boolean>;
-
-  /**
-   * Updates an existing API key record.
-   * @param key - The API key to update.
-   * @param status - The new status for the API key.
-   * @param endpoints - The new endpoints for the API key.
-   * @param requests - The new number of requests for the API key.
-   * @returns A promise that resolves to a boolean indicating whether the API key was successfully updated.
-   */
-  updateKey: ({
-    key,
-    status,
-    endpoints,
-    requests,
-  }: {
-    key: APIKey;
-    status?: APIKeyStatus;
-    endpoints?: string[] | "all";
-    requests?: number;
-  }) => Promise<boolean>;
-
-  /**
-   * Gets a specific API key record.
-   * @param key - The API key to retrieve.
-   * @returns A promise that resolves to the API key record, or undefined if the API key does not exist.
-   */
-  getKey: (key: APIKey) => Promise<APIKeyRecord | undefined>;
-
-  /**
-   * Deletes an API key record.
-   * @param key - The API key to delete.
-   * @returns A promise that resolves to a boolean indicating whether the API key was successfully deleted.
-   */
-  deleteKey: (key: APIKey) => Promise<boolean>;
-
-  /**
-   * Increments the requests count for an API key.
-   * @param key - The API key to increment the requests count for.
-   * @returns A promise that resolves to a boolean indicating whether the requests count was successfully incremented.
-   */
-  incrementRequests: (key: APIKey) => Promise<boolean>;
-}
-```
+Learn more about in-memory data source [here](/data-sources#in-memory).
