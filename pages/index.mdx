@@ -30,12 +30,13 @@ Intento helps you decipher what that _something_ is that the user wants done, an
 
 The core component of Intento is an **Intent Recognition Service (IRS) endpoint**. When you configure your project and run the server, the IRS endpoint that you setup, listens for incoming requests. When a new request is received, the IRS endpoint processes the request, extracts the intent and information from the user input, and sends back the extracted intent and information in the response.
 
-Here is the basic workflow:
+Here is the basic workflow for setting up an intent recognition service using Intento:
 
-1. **Intento Project**: First step is to setup an Intento project. You can install the Intento package using npm or pnpm, or use the Intento starter template to get started.
-2. **Setup IRS Data Source**: Setup a data source that the IRS endpoint will be able to use to access data related to the intent recognition service (IRS).
-3. **Define IRS Endpoint**: Define an IRS endpoint with the configurations you want. You can define multiple IRS endpoints, each with its own configurations.
-4. **Run the Server**: Once you have setup the IRS data source and defined the IRS endpoint, you can run the server to start the IRS endpoint.
+1. **Intento Project**: First step is to setup an Intento project. You can [install Intento as a package](/getting-started#installing-intento-package), or use the [Intento starter template](/getting-started#intento-starter-template) to get started.
+2. **Prepare IRS Data**: The most important part of any intent recognition service is the **data** that it uses to recognize intents and extract information. Before you can setup an IRS endpoint, you need to prepare the data that the IRS endpoint will use. Check the [Data](/data) page to learn more.
+3. **Setup IRS Data Source**: Setup a data source that the IRS endpoint will be able to use to access the data related to the intent recognition service (IRS). Check the [Data Sources](/data-sources) page to learn more.
+4. **Define IRS Endpoint**: Define an IRS endpoint with the configurations you want. You can define multiple IRS endpoints, each with its own configurations. Check the [IRS Endpoints](/irs-endpoints) page to learn more.
+5. **Run the Server**: Once you have setup the IRS data source and defined the IRS endpoint, you can run the server to start the IRS endpoint.
 
 <Button variant="default" className="my-5">
   <Link href="/getting-started" className="no-style-link flex flex-row gap-1">

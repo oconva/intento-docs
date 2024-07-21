@@ -1,22 +1,12 @@
 {
   "index": "Introduction",
   "getting-started": "Getting Started",
-  "chat-endpoints": "Chat Endpoints",
-  "chat-agent": {
-    "display": "hidden"
-  },
-  "chat-history": "Chat History",
-  "prompts": "Prompts",
-  "rag-guide": "RAG Guide",
-  "caching": "Caching",
+  "irs-endpoints": "IRS Endpoints",
+  "data": "Data",
+  "data-sources": "Data Sources",
   "authentication": "Authentication",
-  "integrations": "Integrations",
+  "testing-endpoints": "Testing Endpoints",
   "deployment": "Deployment",
-  "Examples": {
-    "title": "Examples ↗",
-    "href": "https://github.com/oconva/qvikchat-examples",
-    "newWindow": true
-  },
   "about": {
     "title": "About",
     "type": "page"

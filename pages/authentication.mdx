@@ -1,6 +1,6 @@
 # Authentication
 
-API key based authentication is used to authenticate the users who make requests to the IRS service. The API key is a secret unique identifier that is used to authenticate the user and authorize the request. The API key is provided by the user when making a request to the service in the `Authorization` header of the request.
+API key-based authentication is used to authenticate the users who make requests to the IRS service. API key is a secret unique identifier that is used to authenticate the user and authorize the request. This key is provided by the user (or your app) when making an `HTTP POST` request to the intent recognition service in the `Authorization` header of the request.
 
 This simple approach may not be the most secure way to authorize requests, but it is simple to use and implement, and has negligible overhead for both maintenance and request processing. This ensure that intent recognition requests can be performed with low-latency but still be secure.
 
