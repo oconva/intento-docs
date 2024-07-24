@@ -21,3 +21,13 @@ updates:
       interval: 'daily'
     commit-message:
       prefix: 'GitHub Actions Updates'
+    groups:
+      # group all dependency updates together in a single pull request
+      dependencies:
+        applies-to: version-updates
+        patterns:
+          - '*'
+      dependencies-security-updates:
+        applies-to: security-updates
+        patterns:
+          - '*'
