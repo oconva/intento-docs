@@ -1,5 +1,5 @@
-import Img from "../components/img";
-import Link from "next/link";
+import Img from '../components/img';
+import Link from 'next/link';
 
 # Getting Started
 
@@ -14,8 +14,10 @@ Here is the basic workflow for setting up an intent recognition service using In
 1. **Intento Project**: First step is to setup an Intento project. You can [install Intento as a package](#installing-intento-package), or use the [Intento starter template](#intento-starter-template) to get started.
 2. **Prepare IRS Data**: The most important part of any intent recognition service is the **data** that it uses to recognize intents and extract information. Before you can setup an IRS endpoint, you need to prepare the data that the IRS endpoint will use. Check the [Data](/data) page to learn more.
 3. **Setup IRS Data Source**: Setup a data source that the IRS endpoint will be able to use to access the data related to the intent recognition service (IRS). Check the [Data Sources](/data-sources) page to learn more.
-4. **Define IRS Endpoint**: Define an IRS endpoint with the configurations you want. You can define multiple IRS endpoints, each with its own configurations. Check the [IRS Endpoints](/irs-endpoints) page to learn more.
-5. **Run the Server**: Once you have setup the IRS data source and defined the IRS endpoint, you can run the server to start the IRS endpoint.
+4. **Specify IRS Endpoint Configurations**: Next step is to specify the configurations for the IRS endpoint(s) we want our server to serve. Through these configurations we configure the endpoint name, data source to use for the IRS, whether to use authentication or not, and enable or disable verbose mode. Check the [IRS Endpoints](/irs-endpoints) page to learn more.
+5. **Run the Server**: Once we have completed the steps above, we can run the IRS server by providing it a list of all configuration objects for the IRS endpoints we want defined. The server will start and listen for incoming requests at the IRS endpoints.
+
+When using the [Intento starter template](#intento-starter-template), it comes with pre-configured IRS endpoints based on test data related to an inventory management app. You can test these endpoints to see how the IRS endpoints work and to confirm Intento setup.
 
 ## Installing Intento Package
 
@@ -56,43 +58,55 @@ The below code shows a simple example of defining an IRS endpoint using Intento.
 
 ```typescript copy filename="index.ts"
 import {
-  setIRSDataSource,
-  defineIRSEndpoint,
+  InMemoryDataSource,
   runIRSServer,
-} from "@oconva/intento";
-import { FirestoreDataSource } from "@oconva/intento/data-sources";
+  type IRSData,
+  type IntentData,
+  type APIKeyRecord,
+  type IRSEndpointConfig,
+} from '@oconva/intento';
 
-const irsDataSource = new FirestoreDataSource({
-  credential: credential.cert("./service-account.json"), // or set GOOGLE_APPLICATION_CREDENTIALS env var
-  projectId: "your-project-id",
-  irsId: "your-irs-id",
-  collections: {
-    irsCollection: "ir-services",
-    intentsCollection: "intents",
-    apiKeysCollection: "api-keys",
+// Import the sample data for IRS.
+import IRS_DATA from '../data/irs-data.json';
+import INTENTS_DATA from '../data/intents-data.json';
+import API_KEYS_DATA from '../data/api-keys-data.json';
+
+// Create an in-memory data source for IRS.
+// Below example uses the sample data present in the `data` directory at the root of the project.
+const irsDataSource = new InMemoryDataSource({
+  irsId: 'jV0DFAmdTGVA8mtTUdlC',
+  files: {
+    irsData: IRS_DATA as IRSData[],
+    intentsData: INTENTS_DATA as IntentData[],
+    apiKeysData: API_KEYS_DATA as APIKeyRecord[],
   },
 });
 
-defineIRSEndpoint({
-  endpoint: "irs",
+// Configure the IRS endpoint with endpoint name and data source.
+const irsEndpointConfig: IRSEndpointConfig = {
+  endpoint: 'irs',
   dataSource: irsDataSource,
-});
+};
 
-// Run server
-runIRSServer();
+// Run server with the IRS endpoint configurations.
+// You can provide multiple endpoint configurations if you want to enable multiple IRS endpoints.
+// This will involve fetching the IRS data from data source, setting up the required prompts with IRS data, and API key store setup.
+runIRSServer({
+  endpointConfigs: [irsEndpointConfig],
+});
 ```
 
 Running the above code will run a [Express](https://expressjs.com) server with your defined IRS endpoint accessible through it.
 
 You should be able to access the IRS endpoint defined above at the `irs` endpoint.
 
-The below given command shows you an example of sending a query to an IRS endpoint from terminal using the `curl` command. You will need to modify the server URL, endpoint, API key, query and user ID to match your setup. Check the [testing endpoints](/testing-endpoints) section to learn more about how you can test your IRS endpoints.
+The below given command shows you an example of sending a query to an IRS endpoint from terminal using the `curl` command. You will need to modify the server URL, endpoint, API key, query and user ID to match your setup.
 
 ```bash copy
-curl -X POST "http://127.0.0.1:3400/chat" -H "Content-Type: application/json"  -d '{"data": { "query": "Answer in one sentence: What is Firebase Firestore?" } }'
+curl -X POST "http://127.0.0.1:3400/irs" -H "Content-Type: application/json" -H "Authorization: a5zwhp0YlcRVkpnOXchIkL1lrmf0MPg24POM0kO6HcM=" -d '{"data": { "query": "add 4 litres milk?", "uid": "DI2UZuaTWjQPzVCRjzPW" } }'
 ```
 
-Above example points to `http://127.0.0.1:3400`. You can change this port and host depending on where you are running the server and on which port.
+Check the [testing endpoints](/testing-endpoints) section to learn more about how you can test your IRS endpoints.
 
 ## Intento Starter Template
 
@@ -138,66 +152,6 @@ npm install # or pnpm install
 Intento starter template comes pre-defined with an IRS endpoint based on test data related to an inventory management app. This endpoint is defined in the `src/index.ts` file.
 
 You can test the pre-defined endpoint to see how the IRS endpoints work and to confirm Intento setup. You can do this either using a graphical interface or by running the server locally and testing the endpoints using the terminal.
-
-#### Test from Terminal
-
-You can also run the server locally to test the endpoints from their REST endpoints.
-
-Before you can do this, you will need to first compile the TypeScript code.
-
-Compile the TypeScript code. You can modify `.swcrc` to change the SWC configurations and `package.json` to adjust the build command.
-
-```bash copy
-npm run build
-```
-
-Or
-
-```bash copy
-pnpm build
-```
-
-Then, start the server:
-
-```bash copy
-npm run start
-```
-
-Or
-
-```bash copy
-pnpm start
-```
-
-Depending on which endpoint you wish to test, and where and on which port your server starts, you should be able to access the IRS endpoints through the terminal using the `curl` command. The below given example sends the query to the `irs` endpoint:
-
-```bash copy
-curl -X POST "http://127.0.0.1:3400/query" -H "Content-Type: application/json" -H "Authorization: a5zwhp0YlcRVkpnOXchIkL1lrmf0MPg24POM0kO6HcM=" -d '{"data": { "query": "add 4 litres milk?", "uid": "DI2UZuaTWjQPzVCRjzPW" } }'
-```
-
-#### Test Using Genkit Developer UI
-
-You can run the Genkit developer UI to test the endpoints. Testing the endpoints using a graphical interface is probably the easiest way to get started. You can know more about the Genkit Developer UI [here](https://firebase.google.com/docs/genkit/devtools#genkit_developer_ui).
-
-Start the Genkit developer UI:
-
-```bash copy
-npx genkit start
-```
-
-OR, you can install the Genkit CLI globally:
-
-```bash copy
-npm i -g genkit
-```
-
-Then start the Genkit developer UI:
-
-```bash copy
-genkit start
-```
-
-You should be able to see your defined IRS endpoints under the **Flows** section in the left sidebar. Simply click on the endpoint you want to test and enter the query you want to test with. Clicking the **Run** button will send the query to the endpoint and the response generation process will start.
 
 Check the [testing endpoints](/testing-endpoints) section to learn more about how you can test your IRS endpoints.
 

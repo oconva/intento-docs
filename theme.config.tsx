@@ -1,23 +1,23 @@
-import React from "react";
-import { DocsThemeConfig } from "nextra-theme-docs";
-import { SponsorNavBtn } from "./components/sponsor-nav-btn";
-import { Footer } from "./components/footer";
+import React from 'react';
+import { DocsThemeConfig } from 'nextra-theme-docs';
+import { SponsorNavBtn } from './components/sponsor-nav-btn';
+import { Footer } from './components/footer';
 
 const config: DocsThemeConfig = {
   logo: (
     <span className="text-2xl font-medium nx-text-primary-600">Intento</span>
   ),
-  logoLink: "/",
+  logoLink: '/',
   project: {
-    link: "https://github.com/oconva/intento-docs",
+    link: 'https://github.com/oconva/intento-docs',
   },
   chat: {
     icon: <SponsorNavBtn variant="outline"></SponsorNavBtn>,
-    link: "https://github.com/sponsors/oconva",
+    link: 'https://github.com/sponsors/oconva',
   },
-  docsRepositoryBase: "https://github.com/oconva/intento-docs/tree/main",
+  docsRepositoryBase: 'https://github.com/oconva/intento-docs/tree/main',
   footer: {
-    text: "Intento - A project by Oconva",
+    text: 'Intento - A project by Oconva',
     component: <Footer />,
   },
   sidebar: {
@@ -27,7 +27,7 @@ const config: DocsThemeConfig = {
   primarySaturation: 30,
   useNextSeoProps: () => {
     return {
-      titleTemplate: "%s - Intento",
+      titleTemplate: '%s - Intento',
     };
   },
   head: (

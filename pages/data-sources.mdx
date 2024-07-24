@@ -15,40 +15,56 @@ You can create your own custom data source by extending the `DataSource` interfa
 Intento provides built-in support for using Cloud Firestore as the data source for IRS data, intents data, and API keys data. When using Cloud Firestore, you can simply specify the collection names where the IRS data, intents data, and API keys data are stored when configuring the data source.
 
 ```typescript
-import { FirestoreDataSource } from "@oconva/intento/data-sources";
+import { FirestoreDataSource } from '@oconva/intento/data-sources';
 
 const irsDataSource = new FirestoreDataSource({
-  credential: credential.cert("./service-account.json"), // or set GOOGLE_APPLICATION_CREDENTIALS env var
-  projectId: "your-project-id",
-  irsId: "your-irs-id",
+  firebaseConfig: {
+    credential: credential.cert('./service-account.json'), // or set GOOGLE_APPLICATION_CREDENTIALS env var
+    projectId: 'your-project-id',
+  },
+  irsId: 'your-irs-id',
   collections: {
-    irsCollection: "ir-services",
-    intentsCollection: "intents",
-    apiKeysCollection: "api-keys",
+    irs: 'irs',
+    intents: 'intents',
+    apiKeys: 'api-keys',
   },
 });
 ```
 
 The `FirestoreDataSource` constructor takes an object with the following properties:
 
-- `credential`: The credential object to use to authenticate with Cloud Firestore. This can be the path to the service account key file. If not provided, Intento will try use the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to check for the path to the service account key file. If neither is provided, an error will be thrown.
-- `projectId`: The ID of the Google Cloud project where the Firestore database is located.
+- `firebaseConfig`: Configurations to initialize a Firebase app.
+  - `credential`: The credential object to use to authenticate with Cloud Firestore. This can be the path to the service account key file. If not provided, Intento will try use the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to check for the path to the service account key file. If neither is provided, an error will be thrown.
+  - `projectId`: The ID of the Google Cloud project where the Firestore database is located.
 - `irsId`: The ID of the IRS service for which the data source is being configured. This is used to filter the IRS data, intents data, and API keys data, thereby ensuring that only the data relevant to the IRS service is fetched. This also allows for the possibility of switching the underlying IRS data being used for a particular IRS service endpoint by simply changing the `irsId` value.
 - `collections`: An object containing the names of the collections where the IRS data, intents data, and API keys data are stored. The collections are specified as key-value pairs, where the key is the name of the collection and the value is the name of the collection in the Firestore database.
+
+Instead of providing `firebaseConfig`, you can also provide an instance of a Firebase app directly using the `firebaseApp` property.
 
 ## In-Memory
 
 The In-Memory data source is useful for development and testing purposes. You can provide the path to the JSON files where the IRS data, intents data, and API keys data are stored when configuring the In-Memory data source.
 
-```typescript
-import { InMemoryDataSource } from "@oconva/intento/data-sources";
+```typescript copy {13-21}
+import {
+  InMemoryDataSource,
+  type IRSData,
+  type IntentData,
+  type APIKeyRecord,
+} from '@oconva/intento';
 
+// Import the sample data for IRS.
+import IRS_DATA from '../data/irs-data.json';
+import INTENTS_DATA from '../data/intents-data.json';
+import API_KEYS_DATA from '../data/api-keys-data.json';
+
+// Create an in-memory data source for IRS.
 const irsDataSource = new InMemoryDataSource({
-  irsId: "your-irs-id",
+  irsId: 'jV0DFAmdTGVA8mtTUdlC',
   files: {
-    irsDataFile: "./data/irs-data.json",
-    intentsDataFile: "./data/intents-data.json",
-    apiKeysDataFile: "./data/api-keys-data.json",
+    irsData: IRS_DATA as IRSData[],
+    intentsData: INTENTS_DATA as IntentData[],
+    apiKeysData: API_KEYS_DATA as APIKeyRecord[],
   },
 });
 ```

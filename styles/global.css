@@ -181,7 +181,7 @@ footer {
   ) !important;
 }
 
-:is(html[class~="dark"]) {
+:is(html[class~='dark']) {
   .nextra-code-block pre {
     background-color: hsl(212, 100%, 77%, 0.1);
   }

@@ -20,8 +20,8 @@ When building an intent recognition service with Intento, you have to provide th
 - `usage_limit_tokens`: The maximum number of tokens that can be used by this service. You can set this to control the usage of the service.
 - `api_keys`: An array containing IDs of the records in the API Keys collection for the keys that belong to this service. When a user makes a request to the service, they will need to provide an API key to authenticate themselves. We will discuss the structure of an API key record in detail in the [API Keys Data](#api-keys-data) section.
 - `intents`: An array containing IDs of the records in the Intents collection for the intents that belong to this service. Structure of these intents is discussed in detail in the [Intents Data](#intents-data) section.
-- `llm_settings`: Use this to specify LLM settings for the service. The LLM settings include the primary model to use for intent recognition, the model to use for query reformulation, and the model to use for response evaluation. You can specify the model and other settings for each of these components.
-- `features`: Use this to specify the features that the service supports. You can specify whether the service supports query reformulation and response evaluation.
+- `llm_settings`: Use this to specify LLM settings for the service. The LLM settings include the primary model to use for intent recognition, the model to use for query expansion, and the model to use for response evaluation. You can specify the model and other settings for each of these components.
+- `features`: Use this to specify the features that the service supports. You can specify whether the service supports query expansion and response evaluation.
 
 Example of IRS Data:
 

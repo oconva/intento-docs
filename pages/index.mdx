@@ -1,9 +1,9 @@
-import { SponsorBtn } from "../components/sponsor-btn";
-import { Button } from "../components/ui/button";
-import { Notice } from "../components/notice";
-import Img from "../components/img";
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { SponsorBtn } from '../components/sponsor-btn';
+import { Button } from '../components/ui/button';
+import { Notice } from '../components/notice';
+import Img from '../components/img';
+import { ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 <h1 className="font-bold text-3xl mt-2 nx-text-primary-600">Intento</h1>
 
@@ -35,8 +35,8 @@ Here is the basic workflow for setting up an intent recognition service using In
 1. **Intento Project**: First step is to setup an Intento project. You can [install Intento as a package](/getting-started#installing-intento-package), or use the [Intento starter template](/getting-started#intento-starter-template) to get started.
 2. **Prepare IRS Data**: The most important part of any intent recognition service is the **data** that it uses to recognize intents and extract information. Before you can setup an IRS endpoint, you need to prepare the data that the IRS endpoint will use. Check the [Data](/data) page to learn more.
 3. **Setup IRS Data Source**: Setup a data source that the IRS endpoint will be able to use to access the data related to the intent recognition service (IRS). Check the [Data Sources](/data-sources) page to learn more.
-4. **Define IRS Endpoint**: Define an IRS endpoint with the configurations you want. You can define multiple IRS endpoints, each with its own configurations. Check the [IRS Endpoints](/irs-endpoints) page to learn more.
-5. **Run the Server**: Once you have setup the IRS data source and defined the IRS endpoint, you can run the server to start the IRS endpoint.
+4. **Specify IRS Endpoint Configurations**: We can specify a configurations object for our IRS endpoint. Through these configurations we configure the endpoint name, data source to use for the IRS, whether to use authentication or not, and enable or disable verbose mode. Check the [IRS Endpoints](/irs-endpoints) page to learn more.
+5. **Run the Server**: Once we have completed the steps above, we can run the IRS server by providing it a list of all configuration objects for the IRS endpoints we want defined. The server will start and listen for incoming requests at the IRS endpoints.
 
 <Button variant="default" className="my-5">
   <Link href="/getting-started" className="no-style-link flex flex-row gap-1">
@@ -61,7 +61,7 @@ If you find value from this project, please consider contributing or sponsoring 
 - **Simple and Easy to Use**: Intento is designed to be simple and easy to use, with a minimal learning curve. You can get started with Intento and deploy your own intent recognition service in minutes and in few lines of code.
 - **Deploy to any NodeJS platform**: Deploy your app or service to any NodeJS platform, including Firebase, Google Cloud, AWS, Heroku, etc., with ease.
 - **Firebase Firestore**: In-built support for using [Cloud Firestore](https://firebase.google.com/docs/firestore) as the data source for storing information of your intent recognition service, including intents and API keys.
-- **Advanced Features**: Intento provides support advance features like query reformulation and response evaluation to improve the accuracy and performance of your intent recognition service.
+- **Advanced Features**: Intento provides support advance features like query expansion and response evaluation to improve the accuracy and performance of your intent recognition service.
 - **Focus on Performance, Reliability, and Security**: Every component in Intento is built to ensure low latency and scalable performance without compromising on security. From using prompts that help mitigate LLM hallucination and deter prompt injection attacks, to providing in-built support for authentication for each endpoint, Intento is designed to help you build secure, performant, and reliable intent recognition services.
 
 ## QvikChat

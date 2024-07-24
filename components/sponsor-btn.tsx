@@ -1,14 +1,14 @@
-import { Heart } from "lucide-react";
-import Link from "next/link";
-import SponsorNavBtn from "./sponsor-nav-btn";
+import { Heart } from 'lucide-react';
+import Link from 'next/link';
+import SponsorNavBtn from './sponsor-nav-btn';
 
 type SponsorBtnProps = {
-  variant?: "default" | "outline";
+  variant?: 'default' | 'outline';
   className?: string;
 };
 
 export const SponsorBtn = ({
-  variant = "outline",
+  variant = 'outline',
   className,
 }: SponsorBtnProps) => {
   return (

@@ -30,13 +30,13 @@ Intento provides built-in support for using Cloud Firestore as the data source f
 
 ```typescript {8}
 const irsDataSource = new FirestoreDataSource({
-  credential: credential.cert("./service-account.json"), // or set GOOGLE_APPLICATION_CREDENTIALS env var
-  projectId: "your-project-id",
-  irsId: "your-irs-id",
+  credential: credential.cert('./service-account.json'), // or set GOOGLE_APPLICATION_CREDENTIALS env var
+  projectId: 'your-project-id',
+  irsId: 'your-irs-id',
   collections: {
-    irsCollection: "ir-services",
-    intentsCollection: "intents",
-    apiKeysCollection: "api-keys",
+    irsCollection: 'ir-services',
+    intentsCollection: 'intents',
+    apiKeysCollection: 'api-keys',
   },
 });
 ```
@@ -49,11 +49,11 @@ For development and testing purposes, you can use an in-memory data source to st
 
 ```typescript {6}
 const irsDataSource = new InMemoryDataSource({
-  irsId: "",
+  irsId: '',
   files: {
-    irsDataFile: "./data/irs-data.json",
-    intentsDataFile: "./data/intents-data.json",
-    apiKeysDataFile: "./data/api-keys-data.json",
+    irsDataFile: './data/irs-data.json',
+    intentsDataFile: './data/intents-data.json',
+    apiKeysDataFile: './data/api-keys-data.json',
   },
 });
 ```
